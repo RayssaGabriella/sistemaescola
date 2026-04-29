@@ -3,7 +3,8 @@ import {
   listarNotas,
   criarNota,
   atualizarNota,
-  deletarNota
+  deletarNota,
+  calcularMediaAluno
 } from "../controllers/notaController.js";
 
 import { verificarToken } from "../middlewares/authMiddleware.js";
@@ -114,4 +115,26 @@ router.put("/:id", verificarToken, atualizarNota);
  */
 router.delete("/:id", verificarToken, deletarNota);
 
+/**
+ * @swagger
+ * /notas/media/{aluno_id}:
+ *   get:
+ *     summary: Calcular média do aluno
+ *     tags: [Notas]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: aluno_id
+ *         in: path
+ *         required: true
+ *         description: ID do aluno
+ *     responses:
+ *       200:
+ *         description: Média calculada
+ */
+router.get(
+  "/media/:aluno_id",
+  verificarToken,
+  calcularMediaAluno
+);
 export default router;
